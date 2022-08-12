@@ -1,0 +1,5 @@
+swig
+pywin32
+pywinhook
+ctypes
+sockets
