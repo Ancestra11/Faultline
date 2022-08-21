@@ -6,7 +6,7 @@ import win32ui
 
 class Screenshotter() :
     def __init__(self) :
-        pass
+        self.Count = 1
 
     def get_dimensions(self):
         width = win32api.GetSystemMetrics(win32con.SM_CXVIRTUALSCREEN)
@@ -27,12 +27,18 @@ class Screenshotter() :
         screenshot.CreateCompatibleBitmap(img_dc, width, height)
         mem_dc.SelectObject(screenshot)
         mem_dc.BitBlt((0,0), (width, height), img_dc, (left, top), win32con.SRCCOPY)
-        Saved_File = screenshot.SaveBitmapFile(mem_dc, f'{name}.bmp')
+
+        self.File_Path = '../data/Screenshots/' + name + str(self.Count) + '.bmp'
+        Saved_File = screenshot.SaveBitmapFile(mem_dc, self.File_Path)
 
         mem_dc.DeleteDC()
         win32gui.DeleteObject(screenshot.GetHandle())
+
+        self.Count += 1 
         return Saved_File
 
+    def getFilePath(self) :
+        return self.File_Path
 
     def run(self):
         screenshot()
